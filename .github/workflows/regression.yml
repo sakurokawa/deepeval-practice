@@ -21,10 +21,31 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Run DeepEval Unit Tests
+      - name: DeepEval login & run tests (debug)
         env:
-            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-            CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
         run: |
-          deepeval login --api-key "$CONFIDENT_API_KEY"
+          set -euo pipefail
+
+          # 1) 確認: env がセットされているか（値は出さない）
+          if [ -z "${CONFIDENT_API_KEY:-}" ]; then
+            echo "CONFIDENT_API_KEY is EMPTY"
+            exit 1
+          else
+            echo "CONFIDENT_API_KEY is SET"
+          fi
+
+          # 2) 正しいフラグでログイン（ドキュメント推奨）
+          deepeval login --confident-api-key "$CONFIDENT_API_KEY"
+
+          # 3) 期待される設定ファイルの存在を確認（出力は存在確認のみ）
+          if [ -f "$HOME/.deepeval" ]; then echo "~/.deepeval exists"; fi
+          if [ -f "./.deepeval" ]; then echo "./.deepeval exists"; fi
+          if [ -d "$HOME/.config/deepeval" ]; then echo "~/.config/deepeval exists"; fi
+
+          # 4) (オプション) ファイルサイズだけ確認する（中身を出さない）
+          if [ -f "$HOME/.deepeval" ]; then wc -c "$HOME/.deepeval"; fi
+
+          # 5) 最後にテスト実行（これが実際に POST して 401 になるかを確認）
           deepeval test run test_file.py
