@@ -1,5 +1,5 @@
 __pycache__
-.deepeval
+# .deepeval
 .pytest_cache
 .venv
 .env
