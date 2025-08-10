@@ -29,7 +29,9 @@ jobs:
       - name: Login to Confident AI
         env:
           CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
-        run: deepeval login --confident-api-key "$CONFIDENT_API_KEY"
+        run: |
+          echo "CONFIDENT_API_KEY=$CONFIDENT_API_KEY" >> $GITHUB_ENV
+          deepeval login --confident-api-key "$CONFIDENT_API_KEY"
  
       - name: Run DeepEval Test Run
         run: deepeval test run test_file.py
