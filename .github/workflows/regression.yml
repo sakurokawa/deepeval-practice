@@ -21,6 +21,10 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
+      - name: DeepEval CLI Login
+        run: |
+          echo ${{ secrets.CONFIDENT_API_KEY }} | deepeval login --api-key
+
       - name: Run DeepEval Unit Tests
         env:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
