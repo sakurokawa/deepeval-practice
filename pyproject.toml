@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "deepeval-practice"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.1.0"
+langchain-openai = "^0.1.0"
+langchain-chroma = "^0.1.0"
+openai = "^1.0.0"
+chromadb = "^0.4.0"
+deepeval = "^3.4.0"
+python-dotenv = "^1.0.0"
+pandas = "^2.0.0"
+numpy = "^1.24.0"
+tiktoken = "^0.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
