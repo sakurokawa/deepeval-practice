@@ -34,4 +34,6 @@ jobs:
           deepeval login --confident-api-key "$CONFIDENT_API_KEY"
  
       - name: Run DeepEval Test Run
+        env:
+          CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
         run: deepeval test run test_file.py
