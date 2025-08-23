@@ -21,19 +21,8 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Set OpenAI API Key
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> $GITHUB_ENV
- 
-      - name: Login to Confident AI
-        env:
-          CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
-        run: |
-          echo "CONFIDENT_API_KEY=$CONFIDENT_API_KEY" >> $GITHUB_ENV
-          deepeval login --confident-api-key "$CONFIDENT_API_KEY"
- 
       - name: Run DeepEval Test Run
         env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           CONFIDENT_API_KEY: ${{ secrets.CONFIDENT_API_KEY }}
         run: deepeval test run test_file.py
